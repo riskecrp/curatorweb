@@ -20,7 +20,7 @@
 
         /* Logo similar to homepage */
         .login-logo {
-            max-width: 150px; /* Slightly smaller than homepage */
+            max-width: 150px;
             margin-bottom: 40px;
             opacity: 0.8;
         }
@@ -28,6 +28,7 @@
         .login-container {
             width: 300px;
             text-align: center;
+            position: relative; /* Needed for the shake effect */
         }
 
         /* Input styling */
@@ -37,7 +38,7 @@
             margin-bottom: 15px;
             background-color: transparent;
             border: none;
-            border-bottom: 2px solid #333; /* Underline style only */
+            border-bottom: 2px solid #333;
             color: white;
             font-size: 1rem;
             text-align: center;
@@ -45,9 +46,7 @@
             transition: border-color 0.3s;
         }
 
-        input:focus {
-            border-bottom-color: #ffffff;
-        }
+        input:focus { border-bottom-color: #ffffff; }
 
         input::placeholder {
             color: #555;
@@ -86,26 +85,68 @@
             letter-spacing: 1px;
         }
         .back-link:hover { color: #888; }
+
+        /* Error Message (Hidden by default) */
+        #error-msg {
+            color: #ff0000; /* Red */
+            font-size: 0.8rem;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: none; /* Hidden initially */
+        }
+
+        /* SHAKE ANIMATION */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.3s; 
+        }
     </style>
 </head>
 <body>
 
     <img src="logo.png" alt="Logo" class="login-logo">
 
-    <div class="login-container">
+    <div class="login-container" id="loginBox">
         <form id="loginForm">
             <input type="text" placeholder="Identity" autocomplete="off">
-            <input type="password" placeholder="Key">
+            <input type="password" id="passwordField" placeholder="Key">
             <button type="submit">Authenticate</button>
         </form>
+        
+        <div id="error-msg">ACCESS DENIED</div>
+
         <a href="index.html" class="back-link">Return</a>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop the page from reloading
-            // Redirect to the new page
-            window.location.href = "welcome.html";
+            e.preventDefault(); // Stop reload
+
+            const container = document.getElementById('loginBox');
+            const errorMsg = document.getElementById('error-msg');
+            const passField = document.getElementById('passwordField');
+
+            // 1. Clear the password field
+            passField.value = "";
+
+            // 2. Show the error message
+            errorMsg.style.display = "block";
+
+            // 3. Add the shake class to trigger animation
+            container.classList.add('shake');
+
+            // 4. Remove the shake class after 0.3s so it can be triggered again later
+            setTimeout(() => {
+                container.classList.remove('shake');
+            }, 300);
         });
     </script>
 
