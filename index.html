@@ -28,7 +28,7 @@
 
         /* Logo Styling */
         .logo {
-            max-width: 300px; /* Adjust this to change logo size */
+            max-width: 300px;
             height: auto;
             display: block;
         }
@@ -45,21 +45,32 @@
         .time-unit {
             display: flex;
             flex-direction: column;
-            margin: 0 20px; /* Spacing between numbers */
+            margin: 0 20px;
         }
 
         /* The Numbers */
         .number {
-            font-size: 3rem; /* Size of the numbers */
+            font-size: 3rem;
             font-weight: bold;
         }
 
-        /* The Labels (Days, Hours, etc) */
+        /* The Labels */
         .label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            opacity: 0.7; /* Slightly faded labels */
+            opacity: 0.7;
             margin-top: 5px;
+        }
+
+        /* The Secret Hotspot */
+        .secret-login {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            z-index: 9999;
+            cursor: default; /* Mouse won't change, making it invisible */
         }
 
         /* Mobile Responsiveness */
@@ -94,32 +105,27 @@
         </div>
     </div>
 
+    <a href="login.html" class="secret-login"></a>
+
     <script>
         // Set the date we're counting down to: March 21, 2026
         const countDownDate = new Date("March 21, 2026 00:00:00").getTime();
 
         // Update the count down every 1 second
         const x = setInterval(function() {
-
-            // Get today's date and time
             const now = new Date().getTime();
-
-            // Find the distance between now and the count down date
             const distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in the elements
             document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
             document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
             document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
 
-            // If the count down is over, write some text or hide it
             if (distance < 0) {
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "ARRIVED";
