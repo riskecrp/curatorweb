@@ -2,7 +2,7 @@
   "name": "countdown-site",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx serve -s ."
+    "start": "npx serve ."  <-- REMOVED THE "-s"
   },
   "dependencies": {
     "serve": "^14.2.0"
